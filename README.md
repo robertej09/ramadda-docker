@@ -12,7 +12,7 @@ To build the RAMADDA Docker container:
 
 It is best to be on a fast network when building containers as there can be many intermediate layers to download.
 
-## Prepare the RAMADDA Container for Running
+## Configuring RAMADDA
 
 ### Run Configuration via docker-compose
 
@@ -100,7 +100,7 @@ which should give you output that looks something like this:
 
 to obtain the id of the running RAMADDA container. Now you can enter the container with:
 
-    docker exec -it bash <id>
+    docker exec -it <id> bash
 
 Now use `curl` **inside** the container to verify RAMADDA is running:
 
