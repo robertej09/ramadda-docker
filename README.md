@@ -65,7 +65,7 @@ To clean the slate and remove the container (not the image, the container):
 
 ## Volume Permission Caveats
 
-There are often permission problems with the container not being able to write to the `/data/repository`  and `/usr/local/tomcat/logs` directories which are externally mounted on the Docker host. Unfortunately, [the best practices in this area are still being worked out](https://www.reddit.com/r/docker/comments/46ec3t/volume_permissions_best_practices/?), and this can be the source of frustration with the user and group Unix ids not matching inside versus outside the container. These scenarios can lead to big "permission denied" headaches. One, non-ideal, solution is to open up the permissions on those two directories to all users.
+There are often permission problems with the container not being able to write to the `/data/repository`  and `/usr/local/tomcat/logs` directories which are externally mounted on the Docker host. Unfortunately, [the best practices in this area are still being worked out](https://www.reddit.com/r/docker/comments/46ec3t/volume_permissions_best_practices/?), and this can be the source of frustration with the user and group Unix IDs not matching inside versus outside the container. These scenarios can lead to big "permission denied" headaches. One, non-ideal, solution is to open up the permissions on those two directories to all users.
 
     chmod -R 777 repository logs
     # Or wherever those externally mounted volumes exist
@@ -98,9 +98,9 @@ which should give you output that looks something like this:
     CONTAINER ID IMAGE                  COMMAND                CREATED      STATUS     PORTS                                   NAMES
     7d7f65b66f8e unidata/ramadda:latest "/bin/sh -c ${CATALIN" 21 hours ago Up 21 hours 8080/tcp, 0.0.0.0:80->8081/tcp ramaddadocker_ramadda_1
 
-to obtain the id of the running RAMADDA container. Now you can enter the container with:
+to obtain the ID of the running RAMADDA container. Now you can enter the container with:
 
-    docker exec -it <id> bash
+    docker exec -it <ID> bash
 
 Now use `curl` **inside** the container to verify RAMADDA is running:
 
