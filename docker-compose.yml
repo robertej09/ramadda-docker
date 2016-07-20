@@ -1,5 +1,6 @@
 ramadda:
   image: unidata/ramadda:latest
+  container_name: ramadda
   ports:
     - "80:8081"
   volumes:
