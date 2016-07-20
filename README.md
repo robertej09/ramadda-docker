@@ -49,7 +49,7 @@ Once you have completed your setup you can run the container with:
 
 The output of such command should be something like:
 
-    Creating ramaddadocker_ramadda_1
+    Creating ramadda
 
 ### Stopping RAMADDA
 
