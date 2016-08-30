@@ -6,4 +6,5 @@ ramadda:
   volumes:
     # change default to where you would like the repository directory to live.
     - ./repository:/data/repository
-    - ./logs/:/usr/local/tomcat/logs
+    - ./tomcat-logs/:/usr/local/tomcat/logs
+    - ./ramadda-logs/:/data/repository/logs

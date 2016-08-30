@@ -24,12 +24,13 @@ You can customize the default `docker-compose.yml` to decide:
 -   which port will map to port `8081`
 -   which local directory will map to the RAMADDA `/data/repository` directory
 -   which local directory will map to the Tomcat `/usr/local/tomcat/logs` directory
+-   which local directory will map to the RAMADDA `/data/repository/logs` directory
 
 ### Create RAMADDA Directories
 
-You will want to create the local directories defined in the `docker-compose.yml` for the RAMADDA `/data/repository` directory and  Tomcat `/usr/local/tomcat/logs` directory. For example:
+Create the local directories defined in the `docker-compose.yml` for the RAMADDA `/data/repository` and `/data/repository/logs` directories, and the Tomcat `/usr/local/tomcat/logs` directory. For example:
 
-    mkdir repository logs
+    mkdir repository tomcat-logs ramadda-logs
 
 ### RAMADDA pw.properties File
 
