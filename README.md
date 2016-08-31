@@ -18,7 +18,7 @@ It is best to be on a fast network when building containers as there can be many
 
 To run the RAMADDA Docker container, beyond a basic Docker setup, we recommend installing [docker-compose](https://docs.docker.com/compose/).
 
-You can customize the default `docker-compose.yml` to decide:
+Customize the default `docker-compose.yml` to decide:
 
 -   which RAMADDA image you want to run
 -   which port will map to port `8081`
@@ -34,7 +34,7 @@ Create the local directories defined in the `docker-compose.yml` for the RAMADDA
 
 ### RAMADDA pw.properties File
 
-Inside the `repository` directory, you will want to create `pw.properties` file. The contents of this `.properties` file will look something like: 
+Inside the `repository` directory, create the `pw.properties` file. The contents of this `.properties` file will look something like: 
 
     ramadda.install.password=mysecretpassword
 
@@ -44,7 +44,7 @@ Replace `mysecretpassword` with the password of your choosing.
 
 ### Running RAMADDA
 
-Once you have completed your setup you can run the container with:
+Once you have completed your setup, run the container with:
 
     docker-compose up -d
 
