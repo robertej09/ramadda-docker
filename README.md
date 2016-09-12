@@ -1,16 +1,13 @@
 # RAMADDA Docker
 
-[![Travis Status](https://travis-ci.org/Unidata/ramadda-docker.svg?branch=master)](https://travis-ci.org/Unidata/ramadda-docker)
+[![Travis
+Status](https://travis-ci.org/Unidata/ramadda-docker.svg?branch=master)](https://travis-ci.org/Unidata/ramadda-docker)
 
-This repository contains files necessary to build and run a Docker container for [RAMADDA](https://sourceforge.net/projects/ramadda/). 
+This repository contains files necessary to build and run a Docker container for [RAMADDA](https://sourceforge.net/projects/ramadda/). The RAMADDA Docker images associated with this repository are [available on Docker Hub](https://hub.docker.com/r/unidata/ramadda-docker/).
 
-## Building the Container
+## Versions
 
-To build the RAMADDA Docker container:
-
-    docker build  -t unidata/ramadda:latest .
-
-It is best to be on a fast network when building containers as there can be many intermediate layers to download.
+- `unidata/ramadda-docker:2.2`
 
 ## Configuring RAMADDA
 
@@ -21,7 +18,7 @@ To run the RAMADDA Docker container, beyond a basic Docker setup, we recommend i
 Customize the default `docker-compose.yml` to decide:
 
 -   which RAMADDA image you want to run
--   which port will map to port `8081`
+-   which port will map to Tomcat port `8080`
 -   which local directory will map to the RAMADDA `/data/repository` directory
 -   which local directory will map to the Tomcat `/usr/local/tomcat/logs` directory
 -   which local directory will map to the RAMADDA `/data/repository/logs` directory
@@ -40,7 +37,7 @@ Inside the `repository` directory, create the `pw.properties` file. The contents
 
 Replace `mysecretpassword` with the password of your choosing.
 
-## Running and Stopping the RAMADDA Docker Container with docker-compose
+## Running, Updating and Stopping the RAMADDA Docker Container with docker-compose
 
 ### Running RAMADDA
 
@@ -57,6 +54,10 @@ The output of such command should be something like:
 To stop this container:
 
     docker-compose stop
+
+### Updating RAMADDA
+
+With Docker and `docker-compose`, updating software becomes easier. Update the container version in the `docker-compose.yml` (e.g., from `unidata/ramadda-docker:2.2` to `unidata/ramadda-docker:2.3`), and stop and start the container with `docker-compose`.
 
 ### Delete RAMADDA Container
 
@@ -96,15 +97,15 @@ If you encounter a problem there, you can also:
 which should give you output that looks something like this:
 
     CONTAINER ID IMAGE                  COMMAND                CREATED      STATUS     PORTS                                   NAMES
-    7d7f65b66f8e unidata/ramadda:latest "/bin/sh -c ${CATALIN" 21 hours ago Up 21 hours 8080/tcp, 0.0.0.0:80->8081/tcp ramaddadocker_ramadda_1
+    7d7f65b66f8e unidata/ramadda-docker:latest "/bin/sh -c ${CATALIN" 21 hours ago Up 21 hours 8080/tcp, 0.0.0.0:80->8080/tcp ramaddadocker_ramadda_1
 
-to obtain the ID of the running RAMADDA container. Now you can enter the container with:
+to obtain the `ID` of the running RAMADDA container. Now you can enter the container with:
 
     docker exec -it <ID> bash
 
 Now use `curl` **inside** the container to verify RAMADDA is running:
 
-    curl localhost:8081/repository
+    curl localhost:8080/repository
 
 you should get a response that looks something like:
 
@@ -116,4 +117,4 @@ you should get a response that looks something like:
 
 ## Connecting to RAMADDA with a Web Browser
 
-At this point we are done setting up RAMADDA with docker. To navigate to this instance of RAMADDA from the web, you will have to ensure your docker host (e.g., a cloud VM at Amazon or Microsoft Azure) allows Internet traffic through port 80 at whatever IP or domain name your docker host is located.
+At this point we are done setting up RAMADDA with docker. To navigate to this instance of RAMADDA from the web, you will have to ensure your docker host (e.g., a cloud VM at Amazon or Microsoft Azure) allows Internet traffic through port `80` at whatever IP or domain name your docker host is located.

@@ -15,7 +15,7 @@ before_install:
   - mkdir repository logs && chmod -R 777 repository logs
 
 script:
-  - docker-compose up -d
+  - docker-compose up -d ramadda
 
 after_script:
   - docker ps
