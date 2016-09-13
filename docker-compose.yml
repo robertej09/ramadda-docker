@@ -1,5 +1,5 @@
 ramadda:
-  image: unidata/ramadda-docker:latest
+  image: unidata/ramadda-docker:2.2
   container_name: ramadda
   ports:
     - "80:8080"
