@@ -30,13 +30,17 @@ RUN curl -SL \
   http://geodesystems.com/repository/entry/get/repository.war?entryid=synth%3A498644e1-20e4-426a-838b-65cffe8bd66f%3AL3JhbWFkZGFfMi4yL3JlcG9zaXRvcnkud2Fy \
   -o ${CATALINA_HOME}/webapps/repository.war
 
-ENV JAVA_OPTS -d64 -Xmx4048m -Xms512m \
-  -Dorg.apache.catalina.security.SecurityListener.UMASK=0007 -server \
-  -Dramadda_home=${DATA_DIR} -Dfile.encoding=utf-8
+###
+# Tomcat Java and Catalina Options
+###
 
-ENV CATALINA_OPTS -Dorg.apache.jasper.runtime.BodyContentImpl.LIMIT_BUFFER=true
+COPY files/setenv.sh ${CATALINA_HOME}/bin/setenv.sh
+
+COPY files/javaopts.sh ${CATALINA_HOME}/bin/javaopts.sh
 
 COPY startram.sh ${CATALINA_HOME}/bin/
+
+RUN chmod +x ${CATALINA_HOME}/bin/*.sh
 
 WORKDIR ${DATA_DIR}
 
