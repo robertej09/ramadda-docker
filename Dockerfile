@@ -26,8 +26,6 @@ RUN chown -R tomcat:tomcat ${DATA_DIR}
 # Grab RAMADDA
 ###
 
-USER tomcat
-
 RUN curl -SL \
   http://geodesystems.com/repository/entry/get/repository.war?entryid=synth%3A498644e1-20e4-426a-838b-65cffe8bd66f%3AL3JhbWFkZGFfMi4yL3JlcG9zaXRvcnkud2Fy \
   -o ${CATALINA_HOME}/webapps/repository.war
@@ -42,4 +40,18 @@ COPY startram.sh ${CATALINA_HOME}/bin/
 
 WORKDIR ${DATA_DIR}
 
-CMD ${CATALINA_HOME}/bin/startram.sh
+###
+# Entrypoint
+###
+
+COPY entrypoint.sh /
+
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+###
+# Start container
+###
+
+CMD ["startram.sh"]
