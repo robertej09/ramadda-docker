@@ -74,12 +74,6 @@ To clean the slate and remove the container (not the image, the container):
 
     docker-compose rm -f
 
-## Volume Permission Caveats
-
-There are occasionally permission problems with the container not being able to write to externally mounted directories on the Docker host. Unfortunately, [the best practices in this area are still being worked out](https://www.reddit.com/r/docker/comments/46ec3t/volume_permissions_best_practices/?), and this can be the source of frustration with the user and group Unix IDs not matching inside versus outside the container. These scenarios can lead to big "permission denied" headaches. One, non-ideal, solution is to open up Unix file permissions for externally mounted directories.
-
-    chmod -R 777 <externally mounted directory>
-
 ## Check What is Running
 
 ### curl
