@@ -44,7 +44,7 @@ The Java (`JAVA_OPTS`) and Catalina (`CATALINA_OPTS`) are configured in:
   - `${CATALINA_HOME}/bin/javaopts.sh` (see [javaopts.sh](files/javaopts.sh))
   - `${CATALINA_HOME}/bin/catalinaopts.sh` (see [catalinaopts.sh](files/catalinaopts.sh))
 
-These files can be mounted over with `docker-compose.yml` which can be useful if, for instance, you wish to change the maxmium Java heap space available to RAMADDA or other JVM and Catalina options.
+These files can be mounted over with `docker-compose.yml` which can be useful if, for instance, you wish to change the maximum Java heap space available to RAMADDA or other JVM and Catalina options.
 
 ## Running, Updating and Stopping the RAMADDA Docker Container with docker-compose
 
