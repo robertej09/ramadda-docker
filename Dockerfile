@@ -20,8 +20,6 @@ ENV DATA_DIR /data/repository
 
 RUN mkdir -p ${DATA_DIR}
 
-RUN chown -R tomcat:tomcat ${DATA_DIR}
-
 ###
 # Grab RAMADDA
 ###
