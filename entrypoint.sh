@@ -3,12 +3,15 @@ set -e
 
 if [ "$1" = 'startram.sh' ]; then
 
-    # Reassert file ownership and permissions from parent Tomcat container.
-    # Assert ownership of RAMADDA data directory.
+    ###
+    # Change CATALINA_HOME ownership to tomcat user and tomcat group
+    # Restrict permissions on conf
+    # Ensure RAMADDA data directory is owned by tomcat
+    ###
+
     chown -R tomcat:tomcat ${CATALINA_HOME} && \
         chown -R tomcat:tomcat ${DATA_DIR} && \
-        chmod 400 ${CATALINA_HOME}/conf/* && \
-        chmod 300 ${CATALINA_HOME}/logs/.
+        chmod 400 ${CATALINA_HOME}/conf/*
 
     sync
     exec gosu tomcat "$@"
