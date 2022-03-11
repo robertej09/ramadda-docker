@@ -49,9 +49,7 @@ jobs:
         SERVER="https://index.docker.io/v1"
         USERNAME=${{ secrets.registryuser }}
         PWD=${{ secrets.registrypwd }}
-        echo ${USERNAME} ${PWD}
         TAG=${{ github.ref }}
         TAG=${TAG##*/}
-        echo ${TAG}
-        docker login -u ${USERNAME} -p ${PWD} ${SERVER}
+        echo ${PWD} | docker login ${SERVER} -u ${USERNAME} --password-stdin
         echo docker push ${SERVER}/${REG}:${TAG}
