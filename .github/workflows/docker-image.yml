@@ -51,7 +51,7 @@ jobs:
         PWD=${{ secrets.registrypwd }}
         echo ${USERNAME} ${PWD}
         TAG=${{ github.ref }}
-        TAG = ${TAG##*/}
+        TAG=${TAG##*/}
         echo ${TAG}
         echo docker login -u ${USERNAME} -p ${PWD} ${SERVER}
         echo docker push ${SERVER}/${REG}:${TAG}
