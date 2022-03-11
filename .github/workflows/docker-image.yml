@@ -53,5 +53,5 @@ jobs:
         TAG=${{ github.ref }}
         TAG=${TAG##*/}
         echo ${TAG}
-        echo docker login -u ${USERNAME} -p ${PWD} ${SERVER}
+        docker login -u ${USERNAME} -p ${PWD} ${SERVER}
         echo docker push ${SERVER}/${REG}:${TAG}
