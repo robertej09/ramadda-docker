@@ -17,8 +17,10 @@ jobs:
     steps:
       # Checkout the commit that triggered the workflow
     - uses: actions/checkout@v2
+
     - name: Build the Docker image
       run: docker build --no-cache -t unidata/ramadda-docker:latest .
+
     - name: Run the container
       run: |
         docker run --name ramadda \
@@ -26,11 +28,29 @@ jobs:
         -d \
         -p 8080:8080 \
         unidata/ramadda-docker:latest
+
     # Give chance for RAMADDA to fire up
     - name: Wait and listen for RAMADDA to fire up
       run: nc -z -w300 127.0.0.1 8080
+
     - run: |
         for i in {1..5}; do curl -o /dev/null http://127.0.0.1:8080/repository/ && break || \
         (echo sleeping 15... && sleep 15); done
+
     - name: Run test script
       run: ./.github/testScripts/test.sh
+
+    - name: Push to Dockerhub
+#      if: push or merge
+      # The echo of the secrets here is just for testing purposes, should output
+      # "username" and "password"
+      run: |
+        REG="espinoza_test"
+        SERVER="https://index.docker.io/v1"
+        USERNAME=${{ secrets.registryuser }}
+        PWD=${{ secrets.registrypwd }}
+        echo $(USERNAME) $(PWD)
+        TAG=${{ github.ref##*/ }}
+        echo $(TAG)
+        echo docker login -u $(USERNAME) -p $(PWD) $(SERVER)
+        echo docker push $(SERVER)/$(REG):$(TAG)
