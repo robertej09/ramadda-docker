@@ -18,8 +18,17 @@ jobs:
       # Checkout the commit that triggered the workflow
     - uses: actions/checkout@v2
 
+    - name: Create image name and tag
+      run: |
+        REG="espinoza09"
+        IMAGE="espinoza_test"
+        TAG=${{ github.ref }}
+        TAG=${TAG##*/}
+
     - name: Build the Docker image
-      run: docker build --no-cache -t unidata/ramadda-docker:latest .
+      run: |
+        echo docker build --no-cache -t ${REG}/${IMAGE}:${TAG} .
+        docker build --no-cache -t ${REG}/${IMAGE}:${TAG} .
 
     - name: Run the container
       run: |
@@ -27,7 +36,7 @@ jobs:
         -v $(pwd)/.github/testScripts:/testScripts \
         -d \
         -p 8080:8080 \
-        unidata/ramadda-docker:latest
+        ${REG}/${IMAGE}:${TAG}
 
     # Give chance for RAMADDA to fire up
     - name: Wait and listen for RAMADDA to fire up
@@ -45,12 +54,9 @@ jobs:
       # The echo of the secrets here is just for testing purposes, should output
       # "username" and "password"
       run: |
-        REG="espinoza_test"
         SERVER="https://index.docker.io/v1"
         USERNAME=${{ secrets.registryuser }}
         PWD=${{ secrets.registrypwd }}
-        TAG=${{ github.ref }}
-        TAG=${TAG##*/}
         echo ${PWD} | docker login ${SERVER} -u ${USERNAME} --password-stdin
-        docker push ${REG}:${TAG}
+        docker push ${IMAGE}:${TAG}
         docker logout && echo Successfully logged out of Docker registry
