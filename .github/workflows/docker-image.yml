@@ -52,5 +52,5 @@ jobs:
         TAG=${{ github.ref }}
         TAG=${TAG##*/}
         echo ${PWD} | docker login ${SERVER} -u ${USERNAME} --password-stdin
-        docker push ${SERVER}/${REG}:${TAG}
+        docker push ${REG}:${TAG}
         docker logout && echo Successfully logged out of Docker registry
