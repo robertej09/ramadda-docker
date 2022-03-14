@@ -25,8 +25,8 @@ jobs:
 
     - name: Build the Docker image
       run: |
-        echo Build command: docker build --no-cache -t ${{ env.image }}:${{ env.tag }} .
-        docker build --no-cache -t ${{ env.image }}:${{ env.tag }} .
+        echo Build command: docker build --no-cache -t ${{ env.reg }}/${{ env.image }}:${{ env.tag }} .
+        docker build --no-cache -t ${{ env.reg }}/${{ env.image }}:${{ env.tag }} .
 
     - name: Run the container
       run: |
@@ -34,7 +34,7 @@ jobs:
         -v $(pwd)/.github/testScripts:/testScripts \
         -d \
         -p 8080:8080 \
-        ${{ env.image }}:${{ env.tag }}
+        ${{ env.reg }}/${{ env.image }}:${{ env.tag }}
 
     # Give chance for RAMADDA to fire up
     - name: Wait and listen for RAMADDA to fire up
