@@ -12,21 +12,21 @@ jobs:
   buildAndTest:
     runs-on: ubuntu-latest
     steps:
+
+    - name: Set environment variables
+      run: |
+        echo "reg=espinoza09" >> $GITHUB_ENV
+        echo "image=espinoza_test" >> $GITHUB_ENV
+        tag=${{ github.ref }} && tag=${tag##*/}
+        echo "tag=${tag}" >> $GITHUB_ENV
+
       # Checkout the commit that triggered the workflow
     - uses: actions/checkout@v2
 
-    - name: Create image name and tag
-      run: |
-        REG=${{ env.reg }}
-        IMAGE=${{ env.image }}
-        TAG=${{ github.ref }}
-        TAG=${TAG##*/}
-        echo Build command: docker build --no-cache -t ${REG}/${IMAGE}:${TAG} .
-
     - name: Build the Docker image
       run: |
-        echo docker build --no-cache -t ${REG}/${IMAGE}:${TAG} .
-        docker build --no-cache -t ${REG}/${IMAGE}:${TAG} .
+        echo Build command: docker build --no-cache -t ${{ env.image }}:${{ env.tag }} .
+        docker build --no-cache -t ${{ env.image }}:${{ env.tag }} .
 
     - name: Run the container
       run: |
@@ -34,7 +34,7 @@ jobs:
         -v $(pwd)/.github/testScripts:/testScripts \
         -d \
         -p 8080:8080 \
-        ${REG}/${IMAGE}:${TAG}
+        ${{ env.image }}:${{ env.tag }}
 
     # Give chance for RAMADDA to fire up
     - name: Wait and listen for RAMADDA to fire up
@@ -56,5 +56,5 @@ jobs:
         USERNAME=${{ secrets.registryuser }}
         PWD=${{ secrets.registrypwd }}
         echo ${PWD} | docker login ${SERVER} -u ${USERNAME} --password-stdin
-        docker push ${IMAGE}:${TAG}
+        docker push ${{ env.image }}:${{ env.tag }}
         docker logout && echo Successfully logged out of Docker registry
