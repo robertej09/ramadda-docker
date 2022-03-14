@@ -56,5 +56,5 @@ jobs:
         USERNAME=${{ secrets.registryuser }}
         PWD=${{ secrets.registrypwd }}
         echo ${PWD} | docker login ${SERVER} -u ${USERNAME} --password-stdin
-        docker push ${{ env.image }}:${{ env.tag }}
+        docker push ${{ env.reg }}/${{ env.image }}:${{ env.tag }}
         docker logout && echo Successfully logged out of Docker registry
