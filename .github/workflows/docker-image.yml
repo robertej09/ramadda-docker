@@ -55,7 +55,8 @@ jobs:
         SERVER="https://index.docker.io/v1"
         USERNAME=${{ secrets.registryuser }}
         PWD=${{ secrets.registrypwd }}
-        echo ${PWD} | docker login -u ${USERNAME} --password-stdin
+        docker logout
+        echo ${PWD} | docker login ${SERVER} -u ${USERNAME} --password-stdin
         echo docker push ${{ env.reg }}/${{ env.image }}:${{ env.tag }}
         docker push espinoza09/espinoza_test:actions
         docker logout && echo Successfully logged out of Docker registry
