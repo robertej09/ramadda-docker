@@ -52,7 +52,7 @@ jobs:
       # The echo of the secrets here is just for testing purposes, should output
       # "username" and "password"
       run: |
-        SERVER="https://index.docker.io/v1"
+        SERVER="https://index.docker.io/v2"
         USERNAME=${{ secrets.registryuser }}
         PWD=${{ secrets.registrypwd }}
         docker logout
