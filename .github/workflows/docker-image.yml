@@ -54,7 +54,7 @@ jobs:
       run: ./.github/testScripts/test.sh
 
     - name: Push to Dockerhub
-      if: ${{ github.event_name == "push" || github.event.pull_request_target.merged == true}}
+      if: ${{ github.event_name == 'push' || github.event.pull_request_target.merged == true}}
       run: |
         echo "Event that triggered workflow: ${{ github.event_name }}\nBeginning push to docker registry"
         docker logout
