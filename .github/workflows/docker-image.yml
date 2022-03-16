@@ -26,29 +26,20 @@ jobs:
         tag=${{ github.ref }} && tag=${tag##*/}
         echo "tag=${tag}" >> $GITHUB_ENV
 
-      # Checkout the commit that triggered the workflow
+    # Checkout the commit that triggered the workflow
     - uses: actions/checkout@v2
 
     - name: Build the Docker image
-      run: |
-        docker build --no-cache -t ${{ secrets.imagename }}:${{ env.tag }} .
+      run: docker build --no-cache -t ${{ secrets.imagename }}:${{ env.tag }} .
 
 
     - name: Run the container
       run: |
-        docker run --name ramadda \
+        docker run \
         -v $(pwd)/.github/testScripts:/testScripts \
         -d \
         -p 8080:8080 \
         ${{ secrets.imagename }}:${{ env.tag }}
-
-    # Give chance for RAMADDA to fire up
-    - name: Wait and listen for RAMADDA to fire up
-      run: nc -z -w300 127.0.0.1 8080
-
-    - run: |
-        for i in {1..5}; do curl -o /dev/null http://127.0.0.1:8080/repository/ && break || \
-        (echo sleeping 15... && sleep 15); done
 
     - name: Run test script
       run: ./.github/testScripts/test.sh
@@ -56,7 +47,7 @@ jobs:
     - name: Push to Dockerhub
       if: ${{ github.event_name == 'push' || github.event.pull_request_target.merged == true}}
       run: |
-        echo "Event that triggered workflow: ${{ github.event_name }}\nBeginning push to docker registry"
+        echo "Event that triggered workflow: ${{ github.event_name }}"
         docker logout
         echo ${{ secrets.registrypwd }} | docker login -u ${{ secrets.registryuser }} --password-stdin
         docker push ${{ secrets.imagename }}:${{ env.tag }}
