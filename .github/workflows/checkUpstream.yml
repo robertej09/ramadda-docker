@@ -49,6 +49,9 @@ jobs:
       - name: Update RAMADDA version in Dockerfile
         if: ${{ env.up2date == 'false' }}
         run: |
+          git status
+          pwd
+          ls
           sed -i -e "s|ENV RAMADDA_VERSION *|ENV RAMADDA_VERSION ${{ env.UPSTREAM_TAG }}|g" Dockerfile
 
       - name: Push to MAJOR_VERSION branch
