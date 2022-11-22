@@ -2,7 +2,7 @@
 # Dockerfile for RAMADDA
 ###
 
-FROM unidata/tomcat-docker:8.5
+FROM unidata/tomcat-docker:latest
 
 ###
 # Usual maintenance
@@ -10,7 +10,7 @@ FROM unidata/tomcat-docker:8.5
 
 USER root
 
-RUN apt-get update
+RUN apt-get update && apt-get upgrade --yes && apt-get install ant --yes
 
 ###
 # Create data directory
@@ -21,12 +21,22 @@ ENV DATA_DIR /data/repository
 RUN mkdir -p ${DATA_DIR}
 
 ###
-# Grab RAMADDA
+# Build RAMADDA
 ###
 
-RUN curl -SL \
-  https://geodesystems.com/repository/entry/get/repository.war?entryid=synth%3A498644e1-20e4-426a-838b-65cffe8bd66f%3AL3JlcG9zaXRvcnkud2Fy \
-  -o ${CATALINA_HOME}/webapps/repository.war
+# ENV variable dynamically changed by GitHub Actions workflow
+ENV GIT_TAG 10.37.0
+
+# Install RAMADDA from source hosted on git to ensure we're up to date with the
+# latest version
+
+RUN cd /tmp \
+    && git clone https://github.com/geodesystems/ramadda.git \
+    && cd ramadda \
+    && git checkout tags/${GIT_TAG} -b ramadda-docker \
+    && ant \
+    && mv ./dist/repository.war ${CATALINA_HOME}/webapps/repository.war \
+    && rm -rf /tmp/ramadda
 
 ###
 # Tomcat Java and Catalina Options
