@@ -3,14 +3,16 @@ version: '3'
 services:
 
   ramadda:
-    image: unidata/ramadda-docker:2.2
+    image: espinoza09/ramadda-docker:10.37.0
     container_name: ramadda
     ports:
       - "80:8080"
     volumes:
       # change default to where you would like the repository directory to live.
-      - ./repository:/data/repository
-      - ./tomcat-logs/:/usr/local/tomcat/logs
-      - ./ramadda-logs/:/data/repository/logs
+      - ./test/repository:/data/repository
+      - ./test/tomcat-logs/:/usr/local/tomcat/logs
+      - ./test/ramadda-logs/:/data/repository/logs
+      # Web.xml with cors filter removed
+      - ./test/web.xml/:/usr/local/tomcat/conf/web.xml
     env_file:
       - "compose.env"
