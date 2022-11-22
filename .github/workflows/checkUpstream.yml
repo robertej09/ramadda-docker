@@ -1,0 +1,67 @@
+#######################################################
+# Check dockerhub for updates to the tomcat container #
+#######################################################
+
+name: Check For Upstream Updates
+
+on:
+  schedule:
+    # Every Sunday at 00:00 UTC
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  checkUpstreamTag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout RAMADDA
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          repository: geodesystems/ramadda
+
+      - name: Get latest RAMADDA tag
+        run: |
+          UPSTREAM_TAG=$(git tag --list | sort -Vr | head -n 1)
+          echo "UPSTREAM_TAG=$UPSTREAM_TAG" >> $GITHUB_ENV
+
+      - name: Compare with ramadda-docker
+        run: |
+          cd /tmp
+          git clone https://github.com/robertej09/ramadda-docker
+          cd ramadda-docker
+          UNIDATA_TAG=$(git tag --list | sort -Vr | head -n 1)
+          [[ "$UNIDATA_TAG" == "${{ env.UPSTREAM_TAG }} ]] && up2date="true" || up2date="false"
+          echo "up2date=$up2date" >> $GITHUB_ENV
+          echo "UNIDATA_TAG=$UNIDATA_TAG" >> $GITHUB_ENV
+
+      - name: Checkout ramadda-docker branch
+        if: ${{ env.up2date == 'false' }}
+        run: |
+          MAJOR_VERSION=$(echo ${{ env.UPSTREAM_TAG }} | cut -d "." -f 1)
+          echo "MAJOR_VERSION=$MAJOR_VERSION" >> $GITHUB_ENV
+          # Switch to ramadda-docker branch, creating it if necessary
+          # From man git-switch:
+          # THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+          git switch -c $MAJOR_VERSION
+
+      - name: Update RAMADDA version in Dockerfile
+        if: ${{ env.up2date == 'false' }}
+        run: |
+          sed -i -e "s|ENV RAMADDA_VERSION *|ENV RAMADDA_VERSION ${{ env.UPSTREAM_TAG }}|g"
+
+      - name: Push to MAJOR_VERSION branch
+        if: ${{ env.up2date == 'false' }}
+        run: |
+          git config --global user.name $GITHUB_ACTOR
+          git config --global user.email $GITHUB_ACTOR@users.noreply.github.com
+          git add . && git commit -m "Update to RAMADDA ${{ env.UPSTREAM_TAG }}" && \
+          git tag ${{ env.UPSTREAM_TAG }} && \
+          git push origin ${{ env.MAJOR_VERSION }}
+
+      - name: Submit PR to latest branch
+        if: ${{ env.up2date == 'false' }}
+        run: |
+          gh pr create --title "Update to RAMADDA ${{ env.UPSTREAM_TAG }}" --body "PR created by GitHub Actions"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
