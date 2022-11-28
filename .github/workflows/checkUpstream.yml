@@ -1,6 +1,16 @@
 #######################################################
 # Check dockerhub for updates to the tomcat container #
 #######################################################
+# THIS SECRET MUST BE SET
+# secrets.gh_pat :
+#   When github actions pushes to a branch, in this case
+#   the "MAJOR_VERSION" branch, using the default
+#   GITHUB_TOKEN variable, the push does not trigger
+#   other github actions workflows.
+#   Using a Personal Access Token allows pushes to a
+#   repo to trigger workflows that are dispatched by the
+#   "push" event
+#######################################################
 
 name: Check For Upstream Updates
 
@@ -19,6 +29,7 @@ jobs:
         with:
           fetch-depth: 0
           repository: robertej09/ramadda-docker
+          token: ${{ secrets.gh_pat }}
 
       - name: Get latest RAMADDA tag
         run: |
