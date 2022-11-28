@@ -33,7 +33,7 @@ ENV RAMADDA_VERSION 10.37.0
 RUN cd /tmp \
     && git clone https://github.com/geodesystems/ramadda.git \
     && cd ramadda \
-    && git checkout tags/${GIT_TAG} -b ramadda-docker \
+    && git checkout tags/${RAMADDA_VERSION} -b ramadda-docker \
     && ant \
     && mv ./dist/repository.war ${CATALINA_HOME}/webapps/repository.war \
     && rm -rf /tmp/ramadda
