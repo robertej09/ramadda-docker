@@ -14,22 +14,17 @@ jobs:
   checkUpstreamTag:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout RAMADDA
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          repository: geodesystems/ramadda
-
-      - name: Get latest RAMADDA tag
-        run: |
-          UPSTREAM_TAG=$(git tag --list | sort -Vr | head -n 1)
-          echo "UPSTREAM_TAG=$UPSTREAM_TAG" >> $GITHUB_ENV
-
       - name: Checkout ramadda-docker
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
           repository: robertej09/ramadda-docker
+
+      - name: Get latest RAMADDA tag
+        run: |
+          RAMADDA="https://github.com/geodesystems/ramadda"
+          UPSTREAM_TAG=$(git ls-remote --tags --sort="-v:refname" $RAMADDA | grep -o -E -e "[0-9]*\.[0-9]*\.[0-9]*$" | head -n 1)
+          echo "UPSTREAM_TAG=$UPSTREAM_TAG" >> $GITHUB_ENV
 
       - name: Compare with ramadda-docker
         run: |
