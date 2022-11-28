@@ -25,7 +25,7 @@ RUN mkdir -p ${DATA_DIR}
 ###
 
 # ENV variable dynamically changed by GitHub Actions workflow
-ENV GIT_TAG 10.37.0
+ENV RAMADDA_VERSION 10.37.0
 
 # Install RAMADDA from source hosted on git to ensure we're up to date with the
 # latest version
