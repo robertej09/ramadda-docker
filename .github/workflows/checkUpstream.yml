@@ -25,16 +25,18 @@ jobs:
           UPSTREAM_TAG=$(git tag --list | sort -Vr | head -n 1)
           echo "UPSTREAM_TAG=$UPSTREAM_TAG" >> $GITHUB_ENV
 
+      - name: Checkout ramadda-docker
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          repository: robertej09/ramadda-docker
+
       - name: Compare with ramadda-docker
         run: |
-          cd /tmp
-          git clone https://github.com/robertej09/ramadda-docker
-          cd ramadda-docker
           UNIDATA_TAG=$(git tag --list | sort -Vr | head -n 1)
           [[ "$UNIDATA_TAG" == "${{ env.UPSTREAM_TAG }}" ]] && up2date="true" || up2date="false"
           echo "up2date=$up2date" >> $GITHUB_ENV
           echo "UNIDATA_TAG=$UNIDATA_TAG" >> $GITHUB_ENV
-
 
       - name: Checkout ramadda-docker branch
         if: ${{ env.up2date == 'false' }}
@@ -61,7 +63,8 @@ jobs:
           git config --global user.email $GITHUB_ACTOR@users.noreply.github.com
           git add . && git commit -m "Update to RAMADDA ${{ env.UPSTREAM_TAG }}" && \
           git tag ${{ env.UPSTREAM_TAG }} && \
-          git push origin ${{ env.MAJOR_VERSION }}
+          git push origin ${{ env.MAJOR_VERSION }} && \
+          git push --tag
 
       - name: Submit PR to latest branch
         if: ${{ env.up2date == 'false' }}
