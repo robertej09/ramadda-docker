@@ -28,6 +28,7 @@ jobs:
     steps:
 
     - name: Set environment variables
+      # Create docker tag name based on branch name (major version)
       run: |
         tag=${{ github.ref }} && tag=${tag##*/}
         echo "tag=${tag}" >> $GITHUB_ENV
@@ -57,5 +58,16 @@ jobs:
         docker logout
         echo ${{ secrets.registrypwd }} | docker login -u ${{ secrets.registryuser }} --password-stdin
         docker push ${{ secrets.imagename }}:${{ env.tag }} &&
-        { docker logout && echo "Successfully pushed ${{ secrets.imagename }}:${{ env.tag }}"; } ||
-        { docker logout && echo "Docker push failed" && exit 1; }
+        { echo "Successfully pushed ${{ secrets.imagename }}:${{ env.tag }}"; } ||
+        { echo "Docker push failed" && exit 1; }
+
+    - name: Push to alternate Dockerhub tag
+      if: ${{ env.tag != 'latest' && github.event_name == 'workflow_dispatch' || github.event_name == 'push' }}
+      run: |
+        docker logout
+        echo ${{ secrets.registrypwd }} | docker login -u ${{ secrets.registryuser }} --password-stdin
+        VERSION=$(grep -e "ENV RAMADDA_VERSION" Dockerfile | awk 'print $3}')
+        docker tag ${{ secrets.imagename }}:${{ env.tag }} ${{ secrets.imagename }}:${VERSION} &&
+        docker push ${{ secrets.imagename }}:${VERSION} &&
+        { echo "Successfully pushed ${{ secrets.imagename }}:${VERSION}"; } ||
+        { echo "Docker push failed" && exit 1; }
