@@ -33,7 +33,7 @@ jobs:
 
       - name: Set environment vars
         run: |
-          scriptsdir=$(pwd)/.github/
+          scriptsdir=$(pwd)/.github/helperScripts
           echo "scriptsdir=${scriptsdir}" >> $GITHUB_ENV
 
       - name: Get latest RAMADDA tag
@@ -64,7 +64,7 @@ jobs:
         run: |
           sed -i -e "s|ENV RAMADDA_VERSION.*|ENV RAMADDA_VERSION ${{ env.UPSTREAM_TAG }}|g" Dockerfile
 
-      - name: Update README major version (xx)
+      - name: Update docs
         if: ${{ env.up2date == 'false' }}
         run: |
           ${{ env.scriptsdir }}/update_docs.sh \
