@@ -5,6 +5,7 @@ This repository contains files necessary to build and run a Docker container for
 ## Versions
 
 - `unidata/ramadda-docker:latest`
+<-- MAJOR VERSIONS -->
 - `unidata/ramadda-docker:2.2`
 
 ## Configuring RAMADDA

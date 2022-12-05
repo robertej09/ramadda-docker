@@ -31,6 +31,11 @@ jobs:
           repository: robertej09/ramadda-docker
           token: ${{ secrets.gh_pat }}
 
+      - name: Set environment vars
+        run: |
+          scriptsdir=$(pwd)/.github/
+          echo "scriptsdir=${scriptsdir}" >> $GITHUB_ENV
+
       - name: Get latest RAMADDA tag
         run: |
           RAMADDA="https://github.com/geodesystems/ramadda"
@@ -57,10 +62,15 @@ jobs:
       - name: Update RAMADDA version in Dockerfile
         if: ${{ env.up2date == 'false' }}
         run: |
-          git status
-          pwd
-          ls
           sed -i -e "s|ENV RAMADDA_VERSION.*|ENV RAMADDA_VERSION ${{ env.UPSTREAM_TAG }}|g" Dockerfile
+
+      - name: Update README major version (xx)
+        if: ${{ env.up2date == 'false' }}
+        run: |
+          ${{ env.scriptsdir }}/update_docs.sh \
+          --major-version ${{ env.MAJOR_VERSION }}
+          --full-version ${{ env.UPSTREAM_TAG }}
+          --image ${{ secrets.imagename }}
 
       - name: Push to MAJOR_VERSION branch
         if: ${{ env.up2date == 'false' }}
