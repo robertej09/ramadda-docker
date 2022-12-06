@@ -49,6 +49,7 @@ do
             shift
             ;;
     esac
+    shift
 done
 
 
