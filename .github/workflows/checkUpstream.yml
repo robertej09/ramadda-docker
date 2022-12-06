@@ -68,8 +68,8 @@ jobs:
         if: ${{ env.up2date == 'false' }}
         run: |
           ${{ env.scriptsdir }}/update_docs.sh \
-          --major-version ${{ env.MAJOR_VERSION }}
-          --full-version ${{ env.UPSTREAM_TAG }}
+          --major-version ${{ env.MAJOR_VERSION }} \
+          --full-version ${{ env.UPSTREAM_TAG }} \
           --image ${{ secrets.imagename }}
 
       - name: Push to MAJOR_VERSION branch
