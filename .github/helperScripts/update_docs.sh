@@ -101,6 +101,9 @@ grep -e "unidata/ramadda-docker:${FULL_VERSION}" ${README} \
 # <-- BEGIN CHANGELOG --> on it
 LINE=$(grep -n -e "<-- BEGIN CHANGELOG -->" ${CHANGELOG} | awk -F ":" '{print $1}')
 
+# EXIT IF THIS VERSION ALREADY HAS AN ENTRY
+grep -e "## \[${FULL_VERSION}\]" ${CHANGELOG} && exit
+
 # Output first ${LINE} lines to a tmp file
 head -n ${LINE} ${CHANGELOG} > $TMPCHANGELOG
 
