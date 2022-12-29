@@ -51,11 +51,13 @@ jobs:
 
       - name: Checkout ramadda-docker branch
         if: ${{ env.up2date == 'false' }}
-        # Checkout remote branch
+        # Checkout remote MAJOR_VERSION branch if it exists
+        # Create MAJOR_VERSION branch if it doesn't already exist in remote
         run: |
           MAJOR_VERSION=$(echo ${{ env.UPSTREAM_TAG }} | cut -d "." -f 1)
           echo "MAJOR_VERSION=$MAJOR_VERSION" >> $GITHUB_ENV
           git checkout -b $MAJOR_VERSION origin/$MAJOR_VERSION
+          || git checkout -b $MAJOR_VERSION latest
 
       - name: Update RAMADDA version in Dockerfile
         if: ${{ env.up2date == 'false' }}
