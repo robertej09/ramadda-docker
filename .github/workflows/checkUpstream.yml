@@ -27,6 +27,7 @@ jobs:
       - name: Checkout ramadda-docker
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           repository: robertej09/ramadda-docker
           token: ${{ secrets.gh_pat }}
 
