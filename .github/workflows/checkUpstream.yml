@@ -27,7 +27,6 @@ jobs:
       - name: Checkout ramadda-docker
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
           repository: robertej09/ramadda-docker
           token: ${{ secrets.gh_pat }}
 
@@ -51,13 +50,11 @@ jobs:
 
       - name: Checkout ramadda-docker branch
         if: ${{ env.up2date == 'false' }}
-        # Switch to ramadda-docker branch, creating it if necessary
-        # From man git-switch:
-        # THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+        # Checkout remote branch
         run: |
           MAJOR_VERSION=$(echo ${{ env.UPSTREAM_TAG }} | cut -d "." -f 1)
           echo "MAJOR_VERSION=$MAJOR_VERSION" >> $GITHUB_ENV
-          git switch -c $MAJOR_VERSION
+          git checkout -b $MAJOR_VERSION origin/$MAJOR_VERSION
 
       - name: Update RAMADDA version in Dockerfile
         if: ${{ env.up2date == 'false' }}
