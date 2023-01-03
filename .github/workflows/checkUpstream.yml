@@ -90,7 +90,7 @@ jobs:
         if: ${{ env.up2date == 'false' }}
         run: |
           { gh pr list --head ${{ env.MAJOR_VERSION }} --author app/github-actions \
-          | grep -e "${{ env.MAJOR_VERSION }} | grep -e "OPEN" && echo "PR already open" && exit 0; } \
+          | grep -e "${{ env.MAJOR_VERSION }}" | grep -e "OPEN" && echo "PR already open" && exit 0; } \
           || echo "Submitting new PR"
           gh pr create --title "Update to RAMADDA ${{ env.UPSTREAM_TAG }}" --body "PR created by GitHub Actions"
         env:
