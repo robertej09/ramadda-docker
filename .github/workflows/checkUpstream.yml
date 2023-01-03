@@ -84,9 +84,14 @@ jobs:
           git push origin ${{ env.MAJOR_VERSION }} && \
           git push --tag
 
+      # Check whether an open PR from the MAJOR_VERSION branch already exists
+      # Trying to submit a new one will cause the workflow to fail
       - name: Submit PR to latest branch
         if: ${{ env.up2date == 'false' }}
         run: |
+          { gh pr list --head ${{ env.MAJOR_VERSION }} --author app/github-actions \
+          | grep -e "${{ env.MAJOR_VERSION }} | grep -e "OPEN" && echo "PR already open" && exit 0; } \
+          || echo "Submitting new PR"
           gh pr create --title "Update to RAMADDA ${{ env.UPSTREAM_TAG }}" --body "PR created by GitHub Actions"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
