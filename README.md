@@ -9,6 +9,11 @@ This repository contains files necessary to build and run a Docker container for
 - `espinoza09/espinoza_test:11`
 - `espinoza09/espinoza_test:11.17.0`
 - `espinoza09/espinoza_test:11.14.0`
+- `espinoza09/espinoza_test:10`
+- `espinoza09/espinoza_test:10.96.0`
+- `espinoza09/espinoza_test:10.95.0`
+- `espinoza09/espinoza_test:10.93.0`
+- `espinoza09/espinoza_test:10.91.0`
 - `unidata/ramadda-docker:2.2`
 
 ## Configuring RAMADDA
