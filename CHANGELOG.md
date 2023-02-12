@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <-- BEGIN CHANGELOG -->
+## [11.87.0] - 2023-02-12
+
+### Changed
+
+- Updated Dockerfile to build RAMADDA 11.87.0
+- Update produced by GitHub Actions workflow
+- See the [main RAMADDA repo](https://github.com/geodesystems/ramadda) for more info
+
 ## [11.67.0] - 2023-02-05
 
 ### Changed
