@@ -5,6 +5,86 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <-- BEGIN CHANGELOG -->
+## [12.105.0] - 2023-05-21
+
+### Changed
+
+- Updated Dockerfile to build RAMADDA 12.105.0
+- Update produced by GitHub Actions workflow
+- See the [main RAMADDA repo](https://github.com/geodesystems/ramadda) for more info
+
+## [12.99.0] - 2023-05-14
+
+### Changed
+
+- Updated Dockerfile to build RAMADDA 12.99.0
+- Update produced by GitHub Actions workflow
+- See the [main RAMADDA repo](https://github.com/geodesystems/ramadda) for more info
+
+## [12.93.0] - 2023-05-07
+
+### Changed
+
+- Updated Dockerfile to build RAMADDA 12.93.0
+- Update produced by GitHub Actions workflow
+- See the [main RAMADDA repo](https://github.com/geodesystems/ramadda) for more info
+
+## [12.86.0] - 2023-04-30
+
+### Changed
+
+- Updated Dockerfile to build RAMADDA 12.86.0
+- Update produced by GitHub Actions workflow
+- See the [main RAMADDA repo](https://github.com/geodesystems/ramadda) for more info
+
+## [12.80.0] - 2023-04-23
+
+### Changed
+
+- Updated Dockerfile to build RAMADDA 12.80.0
+- Update produced by GitHub Actions workflow
+- See the [main RAMADDA repo](https://github.com/geodesystems/ramadda) for more info
+
+## [12.70.0] - 2023-04-16
+
+### Changed
+
+- Updated Dockerfile to build RAMADDA 12.70.0
+- Update produced by GitHub Actions workflow
+- See the [main RAMADDA repo](https://github.com/geodesystems/ramadda) for more info
+
+## [12.57.0] - 2023-04-09
+
+### Changed
+
+- Updated Dockerfile to build RAMADDA 12.57.0
+- Update produced by GitHub Actions workflow
+- See the [main RAMADDA repo](https://github.com/geodesystems/ramadda) for more info
+
+## [12.40.0] - 2023-04-02
+
+### Changed
+
+- Updated Dockerfile to build RAMADDA 12.40.0
+- Update produced by GitHub Actions workflow
+- See the [main RAMADDA repo](https://github.com/geodesystems/ramadda) for more info
+
+## [12.30.0] - 2023-03-26
+
+### Changed
+
+- Updated Dockerfile to build RAMADDA 12.30.0
+- Update produced by GitHub Actions workflow
+- See the [main RAMADDA repo](https://github.com/geodesystems/ramadda) for more info
+
+## [12.12.0] - 2023-03-19
+
+### Changed
+
+- Updated Dockerfile to build RAMADDA 12.12.0
+- Update produced by GitHub Actions workflow
+- See the [main RAMADDA repo](https://github.com/geodesystems/ramadda) for more info
+
 ## [11.17.0] - 2023-01-22
 
 ### Changed

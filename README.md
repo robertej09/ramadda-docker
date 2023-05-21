@@ -6,6 +6,17 @@ This repository contains files necessary to build and run a Docker container for
 
 - `unidata/ramadda-docker:latest`
 <-- MAJOR VERSIONS -->
+- `espinoza09/espinoza_test:12`
+- `espinoza09/espinoza_test:12.105.0`
+- `espinoza09/espinoza_test:12.99.0`
+- `espinoza09/espinoza_test:12.93.0`
+- `espinoza09/espinoza_test:12.86.0`
+- `espinoza09/espinoza_test:12.80.0`
+- `espinoza09/espinoza_test:12.70.0`
+- `espinoza09/espinoza_test:12.57.0`
+- `espinoza09/espinoza_test:12.40.0`
+- `espinoza09/espinoza_test:12.30.0`
+- `espinoza09/espinoza_test:12.12.0`
 - `espinoza09/espinoza_test:11`
 - `espinoza09/espinoza_test:11.17.0`
 - `espinoza09/espinoza_test:11.14.0`
